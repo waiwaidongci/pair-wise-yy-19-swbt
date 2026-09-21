@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>岩芯薄片显微照片索引台</title>
+  <title>岩芯薄片借还值守台</title>
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
   <main class="shell">
     <header class="mast">
       <div>
-        <p>Petrographic Slide Index</p>
-        <h1>岩芯薄片显微照片索引台</h1>
+        <p>Petrographic Slide Loan Desk</p>
+        <h1>岩芯薄片借还值守台</h1>
       </div>
       <button id="exportBtn" type="button">导出观察清单</button>
     </header>
@@ -20,21 +20,23 @@
       <form id="sampleForm" class="editor">
         <h2>样本录入</h2>
         <label>显微照片<input id="photoInput" type="file" accept="image/*"></label>
-        <label>样本编号<input name="code" required placeholder="BX-17-03"></label>
-        <label>采样地点<input name="location" placeholder="剖面东侧第二层"></label>
+        <label>样本编号 <span class="req">*</span><input name="code" required placeholder="BX-17-03"></label>
+        <label>采样地点 <span class="req">*</span><input name="location" required placeholder="剖面东侧第二层"></label>
         <div class="pair">
-          <label>放大倍数<input name="magnification" placeholder="40x"></label>
-          <label>偏光类型
-            <select name="polarization">
+          <label>放大倍数 <span class="req">*</span><input name="magnification" required placeholder="40x"></label>
+          <label>偏光类型 <span class="req">*</span>
+            <select name="polarization" required>
+              <option value="">请选择</option>
               <option>单偏光</option>
               <option>正交偏光</option>
               <option>反射光</option>
             </select>
           </label>
         </div>
-        <label>主要矿物<input name="minerals" placeholder="石英、斜长石、黑云母"></label>
-        <label>颗粒结构<input name="texture" placeholder="半自形粒状、碎裂结构"></label>
+        <label>主要矿物 <span class="req">*</span><input name="minerals" required placeholder="石英、斜长石、黑云母"></label>
+        <label>颗粒结构 <span class="req">*</span><input name="texture" required placeholder="半自形粒状、碎裂结构"></label>
         <label>老师批注<textarea name="comment" rows="4" placeholder="记录鉴定依据或疑点"></textarea></label>
+        <p id="formError" class="form-error" role="alert"></p>
         <button type="submit">保存样本</button>
       </form>
 
@@ -51,12 +53,36 @@
         <div id="sampleGrid" class="sample-grid"></div>
       </section>
 
-      <aside class="compare">
-        <h2>并排对比</h2>
-        <div id="comparePane" class="compare-pane"></div>
+      <aside class="side">
+        <section class="side-panel">
+          <h2>并排对比</h2>
+          <div id="comparePane" class="compare-pane"></div>
+        </section>
+        <section class="side-panel">
+          <h2>借阅历史</h2>
+          <div id="historyPane" class="history-pane"></div>
+        </section>
       </aside>
     </section>
   </main>
+
+  <div id="actionModal" class="modal">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <header class="modal-head">
+        <h2 id="modalTitle" class="modal-title"></h2>
+        <button type="button" class="modal-close ghost" aria-label="关闭">×</button>
+      </header>
+      <div id="modalBody" class="modal-body"></div>
+      <p id="modalError" class="form-error" role="alert"></p>
+      <footer class="modal-foot">
+        <button type="button" id="modalCancel" class="ghost">取消</button>
+        <button type="button" id="modalSubmit"></button>
+      </footer>
+    </div>
+  </div>
+
+  <script src="./rules.js"></script>
+  <script src="./store.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>
