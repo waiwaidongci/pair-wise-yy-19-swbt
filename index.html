@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>岩芯薄片显微照片索引台</title>
+  <title>岩芯薄片借还值守台</title>
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
   <main class="shell">
     <header class="mast">
       <div>
-        <p>Petrographic Slide Index</p>
-        <h1>岩芯薄片显微照片索引台</h1>
+        <p>Petrographic Slide Duty Desk</p>
+        <h1>岩芯薄片借还值守台</h1>
       </div>
       <button id="exportBtn" type="button">导出观察清单</button>
     </header>
 
     <section class="layout">
       <form id="sampleForm" class="editor">
-        <h2>样本录入</h2>
+        <h2>样本建档</h2>
         <label>显微照片<input id="photoInput" type="file" accept="image/*"></label>
         <label>样本编号<input name="code" required placeholder="BX-17-03"></label>
         <label>采样地点<input name="location" placeholder="剖面东侧第二层"></label>
@@ -34,7 +34,7 @@
         </div>
         <label>主要矿物<input name="minerals" placeholder="石英、斜长石、黑云母"></label>
         <label>颗粒结构<input name="texture" placeholder="半自形粒状、碎裂结构"></label>
-        <label>老师批注<textarea name="comment" rows="4" placeholder="记录鉴定依据或疑点"></textarea></label>
+        <label>老师批注<textarea name="comment" rows="3" placeholder="记录鉴定依据或疑点"></textarea></label>
         <button type="submit">保存样本</button>
       </form>
 
@@ -51,12 +51,38 @@
         <div id="sampleGrid" class="sample-grid"></div>
       </section>
 
-      <aside class="compare">
-        <h2>并排对比</h2>
-        <div id="comparePane" class="compare-pane"></div>
-      </aside>
+      <div class="rail">
+        <aside class="compare">
+          <h2>并排对比</h2>
+          <div id="comparePane" class="compare-pane"></div>
+        </aside>
+
+        <aside class="duty-log">
+          <h2>值守记录</h2>
+          <p class="duty-hint">逾期未还记录自动置顶，相关样本从对比与导出中排除。</p>
+          <ol id="loanLog" class="loan-log"></ol>
+        </aside>
+      </div>
     </section>
   </main>
+
+  <dialog id="actionDialog" class="action-dialog">
+    <form method="dialog" id="actionForm">
+      <h3 id="actionTitle"></h3>
+      <p id="actionTarget" class="action-target"></p>
+      <div id="actionFields"></div>
+      <p id="actionMessage" class="action-message" hidden></p>
+      <div class="dialog-actions">
+        <button type="button" id="actionCancel" class="ghost">取消</button>
+        <button type="submit" id="actionSubmit">确认</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="./rules.js"></script>
+  <script src="./store.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>

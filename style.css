@@ -6,6 +6,9 @@
   --line: #c9d6cf;
   --accent: #2b7666;
   --amber: #b98225;
+  --red: #b34030;
+  --green: #2b7666;
+  --grey: #7d8d86;
 }
 
 * {
@@ -83,7 +86,8 @@ button {
 
 .editor,
 .board,
-.compare {
+.compare,
+.duty-log {
   border: 1px solid var(--line);
   border-radius: 8px;
   background: rgb(251 253 249 / 92%);
@@ -91,8 +95,15 @@ button {
 }
 
 .editor,
-.compare {
+.compare,
+.duty-log {
   padding: 16px;
+}
+
+.rail {
+  display: grid;
+  gap: 14px;
+  align-items: start;
 }
 
 label {
@@ -161,6 +172,12 @@ textarea {
   background: #dfe9e4;
 }
 
+.photo-placeholder {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: linear-gradient(135deg, #dfe9e4, #eef4f0);
+}
+
 .sample-body {
   padding: 12px;
 }
@@ -221,6 +238,230 @@ textarea {
   object-fit: cover;
   border-radius: 6px;
   background: #dfe9e4;
+}
+
+/* ---------- 值守记录 ---------- */
+
+.duty-hint {
+  margin: 8px 0 10px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.loan-log {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: 520px;
+  overflow-y: auto;
+}
+
+.loan-item {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+  padding: 10px;
+}
+
+.loan-item.is-overdue {
+  border-color: var(--red);
+  box-shadow: 0 0 0 1px var(--red) inset;
+}
+
+.log-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.log-sub {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.log-sub.alert {
+  color: var(--red);
+}
+
+.log-empty {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* ---------- 卡片状态 ---------- */
+
+.card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.badge {
+  display: inline-block;
+  flex: none;
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+  background: var(--grey);
+}
+
+.badge-available { background: var(--green); }
+.badge-out { background: var(--amber); }
+.badge-overdue { background: var(--red); }
+.badge-repair { background: var(--red); }
+.badge-review { background: var(--amber); }
+.badge-frozen,
+.badge-incomplete { background: var(--grey); }
+.badge-returned { background: var(--grey); }
+
+.loan-line {
+  margin: 4px 0 0 !important;
+  font-size: 12px !important;
+}
+
+.loan-line.alert {
+  color: var(--red) !important;
+  font-weight: 600;
+}
+
+.sample-card.is-overdue {
+  border-color: var(--red);
+  box-shadow: 0 0 0 1px var(--red) inset;
+}
+
+/* ---------- 卡片操作按钮 ---------- */
+
+.act-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.act {
+  min-height: 30px;
+  padding: 0 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  background: var(--accent);
+  color: white;
+}
+
+.act.primary {
+  background: var(--accent);
+}
+
+.act.ghost {
+  background: #e8f0eb;
+  color: var(--ink);
+}
+
+.act.danger {
+  color: var(--red);
+  background: #f6e7e3;
+}
+
+.compare-toggle.disabled {
+  color: var(--grey);
+  cursor: not-allowed;
+}
+
+/* ---------- 操作弹窗 ---------- */
+
+.action-dialog {
+  width: min(440px, calc(100vw - 32px));
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0;
+  background: var(--panel);
+  color: var(--ink);
+  box-shadow: 0 24px 60px rgb(15 35 28 / 25%);
+}
+
+.action-dialog::backdrop {
+  background: rgb(20 32 27 / 45%);
+}
+
+.action-dialog form {
+  padding: 20px;
+}
+
+.action-dialog h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+}
+
+.action-target {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.action-dialog label.check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.action-dialog label.check input {
+  width: auto;
+}
+
+.field-hint {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.action-message {
+  margin: 10px 0 0;
+  border-radius: 8px;
+  background: #f6e7e3;
+  color: var(--red);
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.dialog-actions .ghost {
+  background: #e8f0eb;
+  color: var(--ink);
+}
+
+/* ---------- Toast ---------- */
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 26px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: var(--ink);
+  color: white;
+  padding: 10px 18px;
+  font-size: 13px;
+  box-shadow: 0 12px 30px rgb(0 0 0 / 20%);
+  z-index: 10;
+}
+
+.toast.error {
+  background: var(--red);
 }
 
 @media (max-width: 1120px) {
